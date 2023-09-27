@@ -4,7 +4,7 @@ info:
   description: A plugin that allows the user to scrape content from websites using ChatGPT.
   version: 'v1'
 servers:
-  - url: http://localhost:8080
+  - url: http://34.31.169.119:8080
 paths:
   /scrape:
     get:
@@ -25,6 +25,14 @@ paths:
               schema:
                 type: object
                 properties:
-                  content:
-                    type: string
-                    description: The scraped content of the website.
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The name of the product.
+                        price:
+                          type: string
+                          description: The price of the product.
