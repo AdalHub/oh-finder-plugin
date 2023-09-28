@@ -9,9 +9,9 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://34.31.169.119:8080/openapi.yaml"
+    "url": "https://ohelai.duckdns.org:8080/openapi.yaml"
   },
-  "logo_url": "https://34.31.169.119:8080/logo.png",
+  "logo_url": "https://ohelai.duckdns.org:8080/logo.png",
   "contact_email": "support@example.com",
   "legal_info_url": "http://www.example.com/legal"
 }

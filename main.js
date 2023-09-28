@@ -21,8 +21,9 @@ const tesseract = require('node-tesseract-ocr');
 const PORT = 8080;
 
 // Load the SSL certificate and private key
-const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/ohelai.duckdns.org/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/ohelai.duckdns.org/cert.pem', 'utf8');
+
 
 const credentials = {
   key: privateKey,
@@ -102,7 +103,7 @@ app.get('/.well-known/openapi.yaml', (req, res) => {
 });
 
 const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(PORT, () => {
+httpsServer.listen(PORT, '0.0.0.0', () => {
     console.log(`HTTPS Server is running on port ${PORT}`);
 });
 
