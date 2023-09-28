@@ -1,10 +1,34 @@
 const express = require('express');
+const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+
+const app = express();
+
+app.use(cors());
+
+app.get('/.well-known/ai-plugin.json', (req, res) => {
+    res.sendFile(__dirname + '/.well-known/ai-plugin.json');
+});
+
+// ... rest of your code, like starting the server ...
+
 const path = require('path');
 const puppeteer = require('puppeteer');
 const tesseract = require('node-tesseract-ocr');
 
-const app = express();
+
 const PORT = 8080;
+
+// Load the SSL certificate and private key
+const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate
+};
+
 
 const SBR_WS_ENDPOINT = 'wss://brd-customer-hl_70f130d9-zone-scraping_browser:bchwu157c1di@brd.superproxy.io:9222';
 
@@ -77,6 +101,8 @@ app.get('/.well-known/openapi.yaml', (req, res) => {
     res.sendFile(path.join(__dirname, 'openapi.yaml'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(PORT, () => {
+    console.log(`HTTPS Server is running on port ${PORT}`);
 });
+
